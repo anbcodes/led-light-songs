@@ -8,7 +8,8 @@
 
 #include "src/globals.hpp"
 #include "src/effects.hpp"
-#include "songs/test.hpp"
+#include "songs/if.hpp"
+#include "src/patterns.hpp"
 #include "src/secrets.hpp"
 
 CRGB color = CRGB(0, 0, 255);
@@ -87,13 +88,15 @@ void loop() {
 
     ArduinoOTA.poll();
 
+
     // colors_in_out(); // fills with a color then unfills then fills with a different color
     // rainbow(); // solid rainbow
     rainbowoffsync(); // Rainbow going across
     // song_if();
     // broken();
-    test();
+    // test();
     // rainbowoffsync(5, 4); // ^ fast
-    
+
+
     FastLED.show();
 }

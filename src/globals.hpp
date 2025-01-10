@@ -2,9 +2,9 @@
 
 #include <FastLED.h>
 
-#define LED_COUNT 300
-#define RENDER_LED_COUNT 236
-#define RENDER_LED_OFFSET 64
+#define LED_COUNT 238
+#define RENDER_LED_COUNT 238
+#define RENDER_LED_OFFSET 0
 
 #define DATA_PIN 8
 

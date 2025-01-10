@@ -3,7 +3,6 @@
 #include <SPI.h>
 #include <WiFiNINA.h>
 #include <ArduinoOTA.h>
-#include <Arduino.h>
 // clang-format on
 
 #include "src/globals.hpp"
@@ -14,14 +13,16 @@
 
 CRGB color = CRGB(0, 0, 255);
 
-void connect() {
+void connect()
+{
     Serial.begin(9600);
     // delay(3000);
     leds[0] = CRGB(255, 255, 255);
     FastLED.setBrightness(255);
     FastLED.show();
 
-    if (WiFi.status() == WL_NO_MODULE) {
+    if (WiFi.status() == WL_NO_MODULE)
+    {
         Serial.println("Communication with WiFi module failed!");
         leds[0] = CRGB(255, 0, 0);
         FastLED.show();
@@ -31,7 +32,8 @@ void connect() {
 
     arduino::String fv = WiFi.firmwareVersion();
 
-    if (fv < WIFI_FIRMWARE_LATEST_VERSION) {
+    if (fv < WIFI_FIRMWARE_LATEST_VERSION)
+    {
         Serial.println("Please upgrade the firmware");
         Serial.println(WIFI_FIRMWARE_LATEST_VERSION);
         leds[0] = CRGB(255, 0, 0);
@@ -42,7 +44,8 @@ void connect() {
 
     int status = 0;
 
-    while (status != WL_CONNECTED) {
+    while (status != WL_CONNECTED)
+    {
         digitalWrite(LED_BUILTIN, LOW);
         Serial.print("Attempting to connect to SSID: ");
 
@@ -50,7 +53,8 @@ void connect() {
 
         status = WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
-        if (status == WL_CONNECTED) {
+        if (status == WL_CONNECTED)
+        {
             break;
         }
 
@@ -58,7 +62,8 @@ void connect() {
 
         delay(4000);
         attempts++;
-        if (attempts > 10) {
+        if (attempts > 10)
+        {
             NVIC_SystemReset();
         }
     }
@@ -69,7 +74,8 @@ void connect() {
 
 WiFiServer server(11234);
 
-void setup() {
+void setup()
+{
     Serial.begin(9600);
     FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, LED_COUNT);
     pinMode(LED_BUILTIN, OUTPUT);
@@ -78,25 +84,28 @@ void setup() {
     server.begin();
 }
 
-
-
-
-void loop() {
-    if (WiFi.status() != WL_CONNECTED) {
+void loop()
+{
+    if (WiFi.status() != WL_CONNECTED)
+    {
         NVIC_SystemReset();
     }
 
     ArduinoOTA.poll();
 
+    // for (int i = 0; i < LED_COUNT; i++)
+    // {
+    //     leds[i] = CRGB(255, 0, 0);
+    // }
 
     // colors_in_out(); // fills with a color then unfills then fills with a different color
     // rainbow(); // solid rainbow
     rainbowoffsync(); // Rainbow going across
+    // custom_song();
     // song_if();
     // broken();
     // test();
     // rainbowoffsync(5, 4); // ^ fast
-
 
     FastLED.show();
 }
